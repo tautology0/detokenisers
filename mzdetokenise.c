@@ -63,19 +63,10 @@ char **argv;
    sharpascii[189]='y';
 
    infile=fopen(argv[1],"rb");
-
-   // First check whether it's a BASIC file
-   work=get8bit(infile);
-   if (work != 0x05 && work != 0x02)
-   {
-      printf("This isn't an MZ BASIC file\n");
-      fclose(infile);
-      exit(1);
-   }
-
-   // Now skip to the start
+   // Skip the file header
    fseek(infile, 0x80, SEEK_SET);
 
+   // First check whether it's a BASIC file
    while (!feof(infile))
    {
       // first get the line length
