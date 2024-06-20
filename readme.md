@@ -1,4 +1,5 @@
-A selection of BASIC detokenisers for various 8-bit platform, these have been written over a 20 year period and may not work in all cases.
+# Introduction
+A selection of BASIC detokenisers for various 8-bit platforms, these have been written over a 30 year period and may not work in all cases.
 
 Included are:
 
@@ -19,3 +20,16 @@ For the Oric, works from the raw files
 
 Specdetokenise<br>
 For the ZX Spectrum, works from a SNA snapshot
+
+# Usage
+All of these are simple stream extractors - they go through the files as a stream and print out the results as they go, they take the file on the command line and write to stdout, e.g.:
+
+```
+specdetokenise game.sna
+```
+
+To redirect the output use the > operator as in:
+
+```
+specdetokenise game.sna > game.bas
+```
