@@ -2,20 +2,20 @@ A selection of BASIC detokenisers for various 8-bit platform, these have been wr
 
 Included are:
 
-BBCdetokenise
+BBCdetokenise<br>
 For the BBC micro and Electron, works from the raw files, they'll need to be extracted from a disc image first
 
-C64detokenise
+C64detokenise<br>
 For the C64, works from a VICE snapshot
 
-CPCdetokenise
+CPCdetokenise<br>
 For the Amstrad CPC, works from a snapshot
 
-MZdetokenise
-For the Sharp MZ-700, works from the raw files
+MZdetokenise, mz80adetokenise, mz80kdetokenise<br>
+For the Sharp MZ-700, MZ-80A and MZ-80K, works from the .MZF files
 
-Oricdetokenise
+Oricdetokenise<br>
 For the Oric, works from the raw files
 
-Specdetokenise
+Specdetokenise<br>
 For the ZX Spectrum, works from a SNA snapshot
