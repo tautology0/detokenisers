@@ -47,7 +47,7 @@ char **argv;
                           "<",       "",       "",      "",      "",      "",     "",        "",     "",      "",       "",       // 95
                           "",        "",       "",      "",      "",      "",     "",        "",     "TO",    "STEP",   "LEFT$(", // A0
                           "RIGHT$(", "MID$(",  "LEN(",  "CHR$(", "STR$(", "ASC(", "VAL(",    "PEEK(","TAB(",  "SPACE$(","SIZE",   // AB
-                          "",        "",       "",      "STRING$(","","CHARACTER$(","CRSH",  "CRSV", "",      "",       "",       // B6
+                          "",        "",       "",      "STRING$(","","CHARACTER$(","CRS",  "CRS", "",      "",       "",         // B6
                           "",        "",       "",      "",      "",      "",     "",        "",     "",      "RND(",   "SIN("    // C1
                           "COS(",    "TAN(",   "ATN(",  "EXP(",  "INT(",  "LOG(",  "LN(",    "ABS(", "SGN(",  "SQR("
                         };
@@ -169,7 +169,7 @@ char **argv;
             {
                printf("%s",tokens2[work-0x80]);
             }
-            if (work == 0x97 || work == 0x94)
+            if (work == 0x80)
             {  // Allow lower case in REMs
                token=1;
             }
