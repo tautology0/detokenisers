@@ -9,27 +9,15 @@ A Python port and merge of three separate C detokenisers:
 
 Select the source machine with --machine {mz700,mz80k,mz80a}.
 
-NOTE ON A SOURCE QUIRK
------------------------
-In the original mz80adetokenise.c and mz80kdetokenise.c, the `tokens2[]`
-initialiser has a missing comma between the "SIN(" and "COS(" entries:
-
-    ..., "RND(",   "SIN("    // C1
-    "COS(",    "TAN(", ...
-
-In C, two adjacent string literals with no comma between them are
-concatenated into a *single* string constant. So what looks like two
-table entries ("SIN(" and "COS(") is actually one entry, "SIN(COS(",
-and every entry after it (TAN(, ATN(, EXP(, ...) is shifted down by one
-index versus what the source layout suggests.
-
-This only has an observable effect for MZ-80A, since MZ-80A is the only
-one of the two that actually reads from tokens2[] for its byte codes;
-MZ-80K's tokens2[] table is dead code in the original (only tokens1[] is
-ever indexed in mz80kdetokenise.c's main loop).
-
-This port reproduces that shift exactly for MZ-80A, so output is
-byte-identical to the original compiled C tool. See TOKENS2_MZ80A below.
+NOTE ON A SOURCE QUIRK (fixed here, not reproduced)
+----------------------------------------------------
+The original mz80adetokenise.c and mz80kdetokenise.c had a missing comma
+between the "SIN(" and "COS(" entries in the `tokens2[]` initialiser,
+which in C silently concatenates adjacent string literals into one
+constant ("SIN(COS(") and shifts every following entry down by one
+index. That was a genuine bug in the original source, not an
+intentional format quirk, so this port corrects it: SIN( and COS( are
+separate, correctly-indexed entries below.
 """
 
 import argparse
@@ -78,17 +66,14 @@ TOKENS1_MZ80A = pad([
     "PAGE/P",
 ])
 
-# Reproduces the original's missing-comma bug: "SIN(" and "COS(" concatenate
-# into a single entry "SIN(COS(", shifting TAN( onward down by one index.
 TOKENS2_MZ80A = pad([
     "", "", "", "><", "<>", "=<", "<=", "=>", ">=", "", ">",          # 8A
     "<", "", "", "", "", "", "", "", "", "", "",                     # 95
     "", "", "", "", "", "", "", "", "TO", "STEP", "LEFT$(",          # A0
     "RIGHT$(", "MID$(", "LEN(", "CHR$(", "STR$(", "ASC(", "VAL(", "PEEK(", "TAB(", "SPACE$(", "SIZE",  # AB
     "", "", "", "STRING$(", "", "CHARACTER$(", "CRS", "CRS", "", "", "",  # B6
-    "", "", "", "", "", "", "", "", "", "RND(",
-    "SIN(COS(",   # <-- merged entry, see module docstring
-    "TAN(", "ATN(", "EXP(", "INT(", "LOG(", "LN(", "ABS(", "SGN(", "SQR(",
+    "", "", "", "", "", "", "", "", "", "RND(", "SIN(",              # C1
+    "COS(", "TAN(", "ATN(", "EXP(", "INT(", "LOG(", "LN(", "ABS(", "SGN(", "SQR(",
 ])
 
 
